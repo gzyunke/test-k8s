@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: test-k8s
   # 部署名字
   name: test-k8s
 spec:
