@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-k8s
+  # 部署名字
+  name: test-k8s
+spec:
+  replicas: 2
+  # 用来查找关联的 Pod，所有标签都匹配才行
+  selector:
+    matchLabels:
+      app: test-k8s
+  # 定义 Pod 相关数据
+  template:
+    metadata:
+      labels:
+        app: test-k8s
+    spec:
+      # 定义容器，可以多个
+      containers:
+        - name: test-k8s # 容器名字
+          image: ccr.ccs.tencentyun.com/k8s-tutorial/test-k8s:v1 # 镜像

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodata
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem  # Filesystem（文件系统） Block（块）
+  accessModes:
+    - ReadWriteOnce       # 卷可以被一个节点以读写方式挂载
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /root/data
+  nodeAffinity:
+    required:
+      # 通过 hostname 限定在某个节点创建存储卷
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - node2

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-k8s
+spec:
+  # 定义容器，可以多个
+  containers:
+    - name: test-k8s # 容器名字
+      image: ccr.ccs.tencentyun.com/k8s-tutorial/test-k8s:v1 # 镜像

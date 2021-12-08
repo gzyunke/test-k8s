@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-k8s
+  # 部署名字
+  name: test-k8s
+spec:
+  replicas: 2
+  # 用来查找关联的 Pod，所有标签都匹配才行
+  selector:
+    matchLabels:
+      app: test-k8s
+  # 定义 Pod 相关数据
+  template:
+    metadata:
+      labels:
+        app: test-k8s
+    spec:
+      # 等待 mongodb 起来后才启动
+      initContainers:
+      - name: wait-mongo
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup mongodb; do echo waiting for mongo; sleep 2; done"]
+      # 定义容器，可以多个
+      containers:
+      - name: test-k8s # 容器名字
+        image: ccr.ccs.tencentyun.com/k8s-tutorial/test-k8s:v4-configmap # 镜像
+        env:
+          - name: MONGO_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: mongo-username
+          - name: MONGO_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: mongo-password
+          - name: MONGO_ADDRESS
+            valueFrom:
+              configMapKeyRef:
+                name: mongo-config
+                key: mongoAddress
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-k8s
+spec:
+  selector:
+    app: test-k8s
+  # 默认 ClusterIp 集群内可访问，NodePort 节点可访问，LoadBalancer 负载均衡模式（需要负载均衡器才可用）
+  type: NodePort
+  ports:
+    - nodePort: 31000   # 节点端口，范围固定 30000 ~ 32767
+      port: 8080        # 本 Service 的端口
+      targetPort: 8080  # 容器端口
