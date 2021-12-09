@@ -6,7 +6,7 @@ metadata:
   # 部署名字
   name: test-k8s
 spec:
-  replicas: 2
+  replicas: 5
   # 用来查找关联的 Pod，所有标签都匹配才行
   selector:
     matchLabels:

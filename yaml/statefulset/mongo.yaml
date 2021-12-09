@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  labels:
-    app: mongodb
   name: mongodb
 spec:
   replicas: 3
@@ -33,6 +31,5 @@ spec:
   clusterIP: None
   ports:
     - port: 27017
-      protocol: TCP
       targetPort: 27017
   

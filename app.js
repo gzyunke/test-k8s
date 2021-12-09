@@ -11,7 +11,6 @@ log4js.configure('./log4js.json');
 log4js.level = 'DEBUG';
 let logger = log4js.getLogger('app');
 
-
 // 获取服务器 ip、hostname
 function getServerInfo() {
 	let os = require("os");
@@ -48,10 +47,11 @@ router.all('/hello/:name', async ctx =>{
 // 	logger.info('not in docker')
 // }
 //
-// let url = `mongodb://localhost:27018`;
+// let url = `mongodb://localhost:27017`;
 // if(isDocker)
 // {
-// 	url = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_ADDRESS}`
+// 	url = 'mongodb://mongodb-0.mongodb:27017'
+// 	// url = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_ADDRESS}`
 // }
 //
 // const MongoDB = require('mongodb')
