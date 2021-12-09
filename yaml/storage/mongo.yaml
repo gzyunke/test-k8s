@@ -1,15 +1,13 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  labels:
-    app: mongodb
   name: mongodb
 spec:
   replicas: 1
+  serviceName: mongodb
   selector:
     matchLabels:
       app: mongodb
-  serviceName: mongodb
   template:
     metadata:
       labels:
@@ -28,6 +26,9 @@ spec:
           hostPath:
             path: /data/mongo-data      # 节点上的路径
             type: DirectoryOrCreate     # 指向一个目录，不存在时自动创建
+#        - name: mongo-data
+#            persistentVolumeClaim:
+#              claimName: mongodata
 ---
 apiVersion: v1
 kind: Service

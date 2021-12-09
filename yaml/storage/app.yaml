@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: test-k8s
   # 部署名字
   name: test-k8s
 spec:
@@ -21,6 +19,11 @@ spec:
       containers:
       - name: test-k8s # 容器名字
         image: ccr.ccs.tencentyun.com/k8s-tutorial/test-k8s:v3-mongo # 镜像
+      # 等待 mongodb 起来后才启动
+      initContainers:
+      - name: wait-mongo
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup mongodb; do echo waiting for mongo; sleep 2; done"]
 ---
 apiVersion: v1
 kind: Service

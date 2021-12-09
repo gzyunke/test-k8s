@@ -4,10 +4,10 @@ metadata:
   name: mongodb
 spec:
   replicas: 3
+  serviceName: mongodb
   selector:
     matchLabels:
       app: mongodb
-  serviceName: mongodb
   template:
     metadata:
       labels:

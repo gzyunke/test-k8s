@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  labels:
-    app: mongodb
   name: mongodb
 spec:
   replicas: 1
