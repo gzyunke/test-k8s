@@ -29,6 +29,11 @@ spec:
               secretKeyRef:
                 name: mongo-secret
                 key: mongo-password
+          - name: MONGO_ADDRESS
+            valueFrom:
+              configMapKeyRef:
+                name: mongo-config
+                key: mongoAddress
           # Secret 的所有数据定义为容器的环境变量，Secret 中的键名称为 Pod 中的环境变量名称
           # envFrom:
           # - secretRef:
